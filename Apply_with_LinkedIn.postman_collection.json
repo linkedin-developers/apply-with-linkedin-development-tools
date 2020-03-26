@@ -1,0 +1,527 @@
+{
+	"info": {
+		"_postman_id": "d4274f07-12e5-474c-b981-3ffcbce65f29",
+		"name": "Apply With LinkedIn",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Provision Customer Application",
+			"item": [
+				{
+					"name": "Parent Application Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b5163cc7-ad71-4c73-83a2-bda5e05d0e27",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.globals.set(\"partner_access_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "text/plain"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{partner_app_client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{partner_app_client_secret}}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://www.linkedin.com/oauth/v2/accessToken",
+							"protocol": "https",
+							"host": [
+								"www",
+								"linkedin",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"v2",
+								"accessToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Provision Child Application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7026b91e-3fe6-44d6-871a-c7ad7dd5c580",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.globals.set(\"customer_application_urn\", jsonData.key);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{partner_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"TEST APP FOR CUSTOMER\",\n    \"name\": \"TEST_CUSTOMER_APP\",\n    \"uniqueForeignId\": \"{{unique_foreign_id}}\",\n    \"validJsSdkDomains\": [\n                 \"http://localhost:5000\"\n            ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.linkedin.com/v2/provisionedApplications",
+							"protocol": "https",
+							"host": [
+								"api",
+								"linkedin",
+								"com"
+							],
+							"path": [
+								"v2",
+								"provisionedApplications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Child Application",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{partner_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"patch\": {\n        \"$set\": {\n            \"validJsSdkDomains\": [\n                \"http://localhost:8000\",\n                 \"http://localhost:5000\"\n            ]\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "https://api.linkedin.com/v2/provisionedApplications/{{customer_application_urn}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"linkedin",
+								"com"
+							],
+							"path": [
+								"v2",
+								"provisionedApplications",
+								"{{customer_application_urn}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Child Application",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{partner_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.linkedin.com/v2/provisionedApplications?q=credentialsByUniqueForeignId&uniqueForeignId={{unique_foreign_id}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"linkedin",
+								"com"
+							],
+							"path": [
+								"v2",
+								"provisionedApplications"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "credentialsByUniqueForeignId"
+								},
+								{
+									"key": "uniqueForeignId",
+									"value": "{{unique_foreign_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "70e5a8a6-0534-4498-8fc9-34c9d45a812b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2e744545-3dc9-43cd-8a04-a9159f6cb0f3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Configure Customer Middleware Integrations",
+			"item": [
+				{
+					"name": "Child Application Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b5163cc7-ad71-4c73-83a2-bda5e05d0e27",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.globals.set(\"customer_access_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "text/plain",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{customer_app_client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{customer_app_client_secret}}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://www.linkedin.com/oauth/v2/accessToken",
+							"protocol": "https",
+							"host": [
+								"www",
+								"linkedin",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"v2",
+								"accessToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer ATSIntegration - APPLY_WITH_LINKEDIN",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{customer_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-restli-method",
+								"value": "batch_partial_update",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entities\": {\n    \"integrationContext={{integration_context}}&integrationType=APPLY_WITH_LINKEDIN&tenantType=JOBS&dataProvider=ATS\": {\n      \"patch\": {\n        \"$set\": {\n          \"integrationName\": \"TEST CUSTOMER INTEGRATION\"\n        }\n      }\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "https://api.linkedin.com/v2/atsIntegrations?ids[0].integrationContext={{integration_context}}&ids[0].integrationType=APPLY_WITH_LINKEDIN&ids[0].tenantType=JOBS&ids[0].dataProvider=ATS",
+							"protocol": "https",
+							"host": [
+								"api",
+								"linkedin",
+								"com"
+							],
+							"path": [
+								"v2",
+								"atsIntegrations"
+							],
+							"query": [
+								{
+									"key": "ids[0].integrationContext",
+									"value": "{{integration_context}}"
+								},
+								{
+									"key": "ids[0].integrationType",
+									"value": "APPLY_WITH_LINKEDIN"
+								},
+								{
+									"key": "ids[0].tenantType",
+									"value": "JOBS"
+								},
+								{
+									"key": "ids[0].dataProvider",
+									"value": "ATS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Customer Integrations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{customer_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.linkedin.com/v2/atsIntegrations?ids[0].integrationContext={{integration_context}}&ids[0].integrationType=APPLY_WITH_LINKEDIN&ids[0].tenantType=JOBS&ids[0].dataProvider=ATS",
+							"protocol": "https",
+							"host": [
+								"api",
+								"linkedin",
+								"com"
+							],
+							"path": [
+								"v2",
+								"atsIntegrations"
+							],
+							"query": [
+								{
+									"key": "ids[0].integrationContext",
+									"value": "{{integration_context}}"
+								},
+								{
+									"key": "ids[0].integrationType",
+									"value": "APPLY_WITH_LINKEDIN"
+								},
+								{
+									"key": "ids[0].tenantType",
+									"value": "JOBS"
+								},
+								{
+									"key": "ids[0].dataProvider",
+									"value": "ATS"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "accessToken",
+						"value": "AQVFhYzNcJkt7QdsBagzD7PQlVKQIwXT3BhHMe9-lU_QRwAY0c_xWkXDZS5-bsDh_tdlU2KIyNXOYv2XaziLQ7k4UPgoDg9fufAwD6A6FCVMRTct-7_yK6IxfuhbnQVy7x87EiUl_7CzjZl5GjV1K_8Od7DDYne2EhwNSqOSyLppYbxOqWUonCro4H1IBgbp60VPiC5cVeEqu6DgwDjCh-VExibmjjMyY18Y8JetNG0J6Pm1nQrxd1c3yVSmy-s9xFidxKlu-b07_0YQFBLGRoCtVIVI3JjzmWiDB56YOSiLy9OSce6V3aVltnHkJfLOl2D24hGGiooA02JlXoo",
+						"type": "string"
+					},
+					{
+						"key": "tokenType",
+						"type": "any"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a06621f4-0ac3-4dbe-aa63-db0ca7c99567",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "310cb745-ff9f-4570-b43c-52ca0e5f3143",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ab7785d9-05c4-422c-9207-f75f0c0869d8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "329e2abc-790d-4c3d-9aa7-ad78cefbf22e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "5f47d993-85e6-45fa-9fcb-351136aedf43",
+			"key": "partner_app_client_id",
+			"value": "<partner_app_client_id>",
+			"type": "string"
+		},
+		{
+			"id": "9982e161-f71f-4e08-a157-161916af0ca1",
+			"key": "partner_app_client_secret",
+			"value": "<partner_app_client_secret>",
+			"type": "string"
+		},
+		{
+			"id": "b02c1b38-4cbb-48ec-9c3b-017fbb774259",
+			"key": "customer_app_client_id",
+			"value": "<customer_app_client_id>",
+			"type": "string"
+		},
+		{
+			"id": "22e6ebf5-798c-4772-9119-d1a186c3167d",
+			"key": "customer_app_client_secret",
+			"value": "<customer_app_client_secret>",
+			"type": "string"
+		},
+		{
+			"id": "737281b8-9dac-46a7-ba64-bb23b61e07b3",
+			"key": "integration_context",
+			"value": "<integration_context_obtained_via_LinkedIn_or_using_ATS_Integration_Confiuration_Plugin>",
+			"type": "string"
+		},
+		{
+			"id": "cec2ba73-8072-400b-80b8-fd6459162a44",
+			"key": "unique_foreign_id",
+			"value": "<unique_id_for_customer_in_your_ATS>",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
