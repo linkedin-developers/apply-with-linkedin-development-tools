@@ -3058,79 +3058,79 @@
 	],
 	"variable": [
 		{
-			"id": "1766be6a-f034-4125-9895-e31f95a5d55a",
+			"id": "066bcbc6-a64a-40e9-9d2c-4c395a3fac82",
 			"key": "partner_app_client_id",
 			"value": "<Partner_application_api_key>",
 			"type": "string"
 		},
 		{
-			"id": "39454e98-360f-45a3-b347-d5f30bb9765e",
+			"id": "ab2fdeb2-d0f4-4b69-965c-51b3bdab311f",
 			"key": "partner_app_client_secret",
 			"value": "<Partner_application_client_secret>",
 			"type": "string"
 		},
 		{
-			"id": "8a400895-7963-438c-af37-0eceb9b279c2",
+			"id": "157434bb-89c7-4c19-8aa6-3a7a8b4fad64",
 			"key": "org_id",
 			"value": "<organizationid present in org urn>",
 			"type": "string"
 		},
 		{
-			"id": "6babf9ae-6fc2-4bc1-ba66-a2fa85162115",
+			"id": "fe19d46f-633b-414e-973c-9d737030342c",
 			"key": "contract_id",
 			"value": "<contractid present in contract urn>",
 			"type": "string"
 		},
 		{
-			"id": "d82b678e-1759-472e-b25d-6df6575ecb30",
+			"id": "c0108e08-377d-44d8-80be-899a24c65422",
 			"key": "customer_app_client_id",
 			"value": "<Customer_application_api_key>",
 			"type": "string"
 		},
 		{
-			"id": "5a3b484c-f007-4fd6-b53d-e109368f3d1c",
+			"id": "4aed2650-25d7-434f-9330-0912d4ce5bf8",
 			"key": "customer_app_client_secret",
 			"value": "<Customer_application_secret>",
 			"type": "string"
 		},
 		{
-			"id": "60d73db2-7637-4425-9ac3-10cfcc614dc7",
+			"id": "d7845e19-3163-4bbf-81b9-82506f41ce1d",
 			"key": "customer_name",
 			"value": "<Your Customer Name>",
 			"type": "string"
 		},
 		{
-			"id": "c4abacdf-01f3-4c33-8572-8561f9ac90e7",
+			"id": "fed8ff67-e596-4b20-a929-2980640fcc89",
 			"key": "unique_foreign_id",
 			"value": "<Unique_id_used_to_discover_customer_in_partner_ATS>",
 			"type": "string"
 		},
 		{
-			"id": "879808e7-ae57-4491-915f-59b59af0c5d7",
+			"id": "058bc2d1-48a1-44aa-a103-b3e9efd56ec0",
 			"key": "candidate_id",
 			"value": "TEST_CANDIDATE_ID_0001",
 			"type": "string"
 		},
 		{
-			"id": "04e7c5c0-e6cc-4b13-801e-7964553ba7b8",
+			"id": "2181301b-799a-4722-a3ee-b3e22a414165",
 			"key": "note_id",
 			"value": "TEST_NOTE_ID_0001",
 			"type": "string"
 		},
 		{
-			"id": "53c77229-0d60-416a-bd6a-0c8f6afd4953",
+			"id": "6ed536f5-8dd2-4ebe-ae27-b8285b0ed967",
 			"key": "application_id",
 			"value": "TEST_APPLICATION_ID_0001",
 			"type": "string"
 		},
 		{
-			"id": "0ea31672-8972-49b3-a5e6-c21cf7de6023",
+			"id": "28fff272-f205-408b-b2cc-7191bde23d73",
 			"key": "private_externalJobPostingId",
 			"value": "TEST_EXTERNAL_JOB_ID_0001",
 			"type": "string"
 		},
 		{
-			"id": "a3f98d9b-1575-4b96-aa25-3eab8bed4f0a",
+			"id": "972e05e8-97eb-4b33-96dc-e193ca67366f",
 			"key": "public_externalJobPostingId",
 			"value": "TEST_EXTERNAL_JOB_ID_0002",
 			"type": "string"
