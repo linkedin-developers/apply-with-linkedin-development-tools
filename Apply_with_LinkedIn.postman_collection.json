@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d4274f07-12e5-474c-b981-3ffcbce65f29",
+		"_postman_id": "8a39dce8-9697-4ed8-b134-15bf618481e6",
 		"name": "Apply With LinkedIn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -420,23 +420,7 @@
 				}
 			],
 			"auth": {
-				"type": "oauth2",
-				"oauth2": [
-					{
-						"key": "accessToken",
-						"value": "AQVFhYzNcJkt7QdsBagzD7PQlVKQIwXT3BhHMe9-lU_QRwAY0c_xWkXDZS5-bsDh_tdlU2KIyNXOYv2XaziLQ7k4UPgoDg9fufAwD6A6FCVMRTct-7_yK6IxfuhbnQVy7x87EiUl_7CzjZl5GjV1K_8Od7DDYne2EhwNSqOSyLppYbxOqWUonCro4H1IBgbp60VPiC5cVeEqu6DgwDjCh-VExibmjjMyY18Y8JetNG0J6Pm1nQrxd1c3yVSmy-s9xFidxKlu-b07_0YQFBLGRoCtVIVI3JjzmWiDB56YOSiLy9OSce6V3aVltnHkJfLOl2D24hGGiooA02JlXoo",
-						"type": "string"
-					},
-					{
-						"key": "tokenType",
-						"type": "any"
-					},
-					{
-						"key": "addTokenTo",
-						"value": "header",
-						"type": "string"
-					}
-				]
+				"type": "noauth"
 			},
 			"event": [
 				{
@@ -487,37 +471,37 @@
 	],
 	"variable": [
 		{
-			"id": "5f47d993-85e6-45fa-9fcb-351136aedf43",
+			"id": "0c645eb6-ce53-418d-9e43-6c645aafe421",
 			"key": "partner_app_client_id",
 			"value": "<partner_app_client_id>",
 			"type": "string"
 		},
 		{
-			"id": "9982e161-f71f-4e08-a157-161916af0ca1",
+			"id": "970c4525-cd3c-4b6c-abc8-083748388f80",
 			"key": "partner_app_client_secret",
 			"value": "<partner_app_client_secret>",
 			"type": "string"
 		},
 		{
-			"id": "b02c1b38-4cbb-48ec-9c3b-017fbb774259",
+			"id": "8ba52299-b9c3-4548-a54e-81f72c56defc",
 			"key": "customer_app_client_id",
 			"value": "<customer_app_client_id>",
 			"type": "string"
 		},
 		{
-			"id": "22e6ebf5-798c-4772-9119-d1a186c3167d",
+			"id": "2adb50b2-55dc-4f27-8b78-c522ec610d5a",
 			"key": "customer_app_client_secret",
 			"value": "<customer_app_client_secret>",
 			"type": "string"
 		},
 		{
-			"id": "737281b8-9dac-46a7-ba64-bb23b61e07b3",
+			"id": "9bf7d2fe-15c4-4c81-acf5-66a44d40e28e",
 			"key": "integration_context",
 			"value": "<integration_context_obtained_via_LinkedIn_or_using_ATS_Integration_Confiuration_Plugin>",
 			"type": "string"
 		},
 		{
-			"id": "cec2ba73-8072-400b-80b8-fd6459162a44",
+			"id": "41938e39-1b94-45e6-9b9c-399a7c0123a5",
 			"key": "unique_foreign_id",
 			"value": "<unique_id_for_customer_in_your_ATS>",
 			"type": "string"
