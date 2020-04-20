@@ -7,7 +7,7 @@
 
 This repository provides development tools like postman collection which helps in integration with `Apply with LinkedIn`.
 
-## PreRequisties
+## Prerequisties
 * Read [**Apply with Linkedin Integration**](https://docs.microsoft.com/en-gb/linkedin/talent/apply-with-linkedin) documentation.
 * In order to use the APIs provided in the postman collection you should join LinkedIn Talent Solutions Partner Program.
 Click [here](https://docs.microsoft.com/en-gb/linkedin/talent/apply-with-linkedin#request-access) to find details on how to join LinkedIn Talent Solutions Partner Program.
