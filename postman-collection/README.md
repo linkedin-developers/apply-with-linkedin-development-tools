@@ -24,3 +24,6 @@ Visit www.getpostman.com and download the version of Postman required for your p
 |customer_app_client_secret|Client secret of Customer's Application. It will be used to get access token to be able to call `Configure Customer Middleware Integrations` APIs|
 |integration_context|The value for `integration_context` is obtained when customer has requested for `Apply with LinkedIn` integration using `ATS Integration Configuration Plugin`|
 |unique_foreign_id|A unique ID that represents the child application being created, as seen from the parent/calling application. This value must be unique across all child applications that belong to the parent application|
+
+
+**[IMPORTANT] PLEASE NOTE THAT POSTMAN IS AN INDEPENDENT ENTITY AND IS NOT AFFILIATED WITH LINKEDIN. LINKEDIN IS PROVIDING THE FOLLOWING RESOURCES TO SUPPORT YOUR USE OF THE POSTMAN SERVICES BUT ULTIMATELY, ANY USE OF THIRD PARTY SERVICES, SUCH AS THE POSTMAN SERVICES, IS AT YOUR OWN DISCRETION AND RISK. LINKEDIN DOES NOT ENDORSE OR VET THE POSTMAN SERVICES AND IS NOT RESPONSIBLE FOR ANY DAMAGE OR LOSS OF DATA RESULTING FROM YOUR USE OF THIRD PARTY SERVICES. NOTHING HEREIN SHALL RESTRICT LINKEDIN'S ABILITY TO ENFORCE ALL OF ITS RIGHTS UNDER ITS AGREEMENTS WITH YOU.**
