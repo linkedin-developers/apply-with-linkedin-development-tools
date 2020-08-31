@@ -1,0 +1,410 @@
+{
+	"info": {
+		"_postman_id": "2dfa571a-f09e-4263-8940-5a5e1b3991a4",
+		"name": "Premium Job Posting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer Application Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5163cc7-ad71-4c73-83a2-bda5e05d0e27",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.globals.set(\"customer_access_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{customer_client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{customer_client_secret}}",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://www.linkedin.com/oauth/v2/accessToken",
+					"protocol": "https",
+					"host": [
+						"www",
+						"linkedin",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"v2",
+						"accessToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Premium Jobs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "26204ca1-0ac2-4f82-9f1e-0db5e622981e",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.globals.set(\"sjp_task_urn\", jsonData.elements[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{customer_access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-restli-method",
+						"value": "batch_create",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"elements\": [\n        {\n            \"listingType\": \"PREMIUM\",\n            \"companyApplyUrl\": \"http://localhost:5000\",\n            \"contract\": \"urn:li:contract:{{contract_id}}\",\n            \"industries\": [\n                \"urn:li:industry:55\"\n            ],\n            \"externalJobPostingId\": \"SJP_1\",\n            \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\n            \"listedAt\": 1573104427000,\n            \"title\": \"JOB_1\",\n            \"integrationContext\": \"urn:li:organization:{{company_id}}\",\n            \"location\": \"San Francisco, California\",\n            \"jobPostingOperationType\": \"CREATE\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.linkedin.com/v2/simpleJobPostings",
+					"protocol": "https",
+					"host": [
+						"api",
+						"linkedin",
+						"com"
+					],
+					"path": [
+						"v2",
+						"simpleJobPostings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Premium Jobs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "26204ca1-0ac2-4f82-9f1e-0db5e622981e",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.globals.set(\"sjp_task_urn\", jsonData.elements[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{customer_access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-restli-method",
+						"value": "batch_create",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"elements\": [\n        {\n            \"listingType\": \"PREMIUM\",\n            \"companyApplyUrl\": \"http://localhost:5000\",\n            \"contract\": \"urn:li:contract:{{contract_id}}\",\n            \"externalJobPostingId\": \"SJP_1\",\n            \"listedAt\": 1573104427000,\n            \"title\": \"JOB_1_NEW\",\n            \"description\":\"This is new updated description and rest is junk, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\",\n            \"integrationContext\": \"urn:li:organization:{{company_id}}\",\n            \"location\": \"San Francisco, California\",\n            \"jobPostingOperationType\": \"UPDATE\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.linkedin.com/v2/simpleJobPostings",
+					"protocol": "https",
+					"host": [
+						"api",
+						"linkedin",
+						"com"
+					],
+					"path": [
+						"v2",
+						"simpleJobPostings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Close Premium Jobs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "26204ca1-0ac2-4f82-9f1e-0db5e622981e",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.globals.set(\"sjp_task_urn\", jsonData.elements[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{customer_access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-restli-method",
+						"value": "batch_create",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"elements\": [\n        {\n            \"listingType\": \"PREMIUM\",\n            \"companyApplyUrl\": \"http://localhost:5000\",\n            \"contract\": \"urn:li:contract:{{contract_id}}\",\n            \"industries\": [\n                \"urn:li:industry:55\"\n            ],\n            \"externalJobPostingId\": \"SJP_1\",\n            \"title\": \"JOB_3\",\n            \"description\":\"This in new updated description\",\n            \"listedAt\": 1573104427000,\n            \"integrationContext\": \"urn:li:organization:{{company_id}}\",\n            \"location\": \"San Francisco, California\",\n            \"jobPostingOperationType\": \"CLOSE\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.linkedin.com/v2/simpleJobPostings",
+					"protocol": "https",
+					"host": [
+						"api",
+						"linkedin",
+						"com"
+					],
+					"path": [
+						"v2",
+						"simpleJobPostings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Premium Job Task Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "47367a80-d0cb-4db2-9661-1bc20df6cc13",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{customer_access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.linkedin.com/v2/simpleJobPostingTasks?ids={{sjp_task_urn}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"linkedin",
+						"com"
+					],
+					"path": [
+						"v2",
+						"simpleJobPostingTasks"
+					],
+					"query": [
+						{
+							"key": "ids",
+							"value": "{{sjp_task_urn}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Renew Premium Jobs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "26204ca1-0ac2-4f82-9f1e-0db5e622981e",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.globals.set(\"sjp_task_urn\", jsonData.elements[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{customer_access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-restli-method",
+						"value": "batch_create",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"elements\": [\n        {\n            \"listingType\": \"PREMIUM\",\n            \"companyApplyUrl\": \"http://localhost:5000\",\n            \"contract\": \"urn:li:contract:{{contract_id}}\",\n            \"industries\": [\n                \"urn:li:industry:55\"\n            ],\n            \"externalJobPostingId\": \"SJP_1\",\n            \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\n            \"listedAt\": 1573104427000,\n            \"title\": \"Test SDET JOB\",\n            \"integrationContext\": \"urn:li:organization:{{company_id}}\",\n            \"location\": \"San Francisco, California\",\n            \"jobPostingOperationType\": \"CREATE\",\n            \"trackingPixelUrl\": \"http://localhost:5000/tracking\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.linkedin.com/v2/simpleJobPostings",
+					"protocol": "https",
+					"host": [
+						"api",
+						"linkedin",
+						"com"
+					],
+					"path": [
+						"v2",
+						"simpleJobPostings"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "486178df-9fa0-4253-8b11-2fe0da23ae04",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "cb0a03ba-e968-40f2-b753-320cd4cce32b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "11bfbcd0-9f8d-4206-abe7-72d3a7a4f574",
+			"key": "customer_client_id",
+			"value": "<customer_app_client_id>",
+			"type": "string"
+		},
+		{
+			"id": "6c56e481-2b2f-45f7-86d8-5fe22bbec5ca",
+			"key": "customer_client_secret",
+			"value": "<customer_app_client_secret>",
+			"type": "string"
+		},
+		{
+			"id": "d7f34d71-853b-47cd-9eee-febda0524cc9",
+			"key": "company_id",
+			"value": "<your_company_id>",
+			"type": "string"
+		},
+		{
+			"id": "d08d2b5b-642d-4781-953f-7af8c155defd",
+			"key": "contract_id",
+			"value": "<contract_id_for_paid_jobs>",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
